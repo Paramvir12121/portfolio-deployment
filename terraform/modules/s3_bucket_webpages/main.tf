@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "bucket" {
 
 }
 
-resource "aws_s3_bucket_public_access_block" "feedback" {
+resource "aws_s3_bucket_public_access_block" "portfolio" {
   bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = false
@@ -13,23 +13,22 @@ resource "aws_s3_bucket_public_access_block" "feedback" {
   restrict_public_buckets = false
 }
 
-resource "aws_s3_bucket_ownership_controls" "feedback" {
+resource "aws_s3_bucket_ownership_controls" "portfolio" {
   bucket = aws_s3_bucket.bucket.id
 
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
-resource "aws_s3_bucket_acl" "feedback" {
+resource "aws_s3_bucket_acl" "portfolio" {
   depends_on = [
-    aws_s3_bucket_ownership_controls.feedback,
-    aws_s3_bucket_public_access_block.feedback,
+    aws_s3_bucket_ownership_controls.portfolio,
+    aws_s3_bucket_public_access_block.portfolio,
   ]
 
   bucket = aws_s3_bucket.bucket.id
   acl    = "public-read"
 }
-
 
 # Create separate resource blocks for each file
 resource "aws_s3_bucket_object" "object" {
@@ -37,16 +36,27 @@ resource "aws_s3_bucket_object" "object" {
   for_each     = { for file in var.files_to_upload : file => file }
   bucket       = var.bucket_name
   key          = each.value
-  source       = "../website/${each.value}"
-  etag         = filemd5("../website/${each.value}")
+  source       = "../website_3/${each.value}"
+  etag         = filemd5("../website_3/${each.value}")
   tags         = var.tags
   content_type = "text/html"
+}
+
+resource "aws_s3_bucket_object" "object_css" {
+  depends_on   = [aws_s3_bucket.bucket]
+  bucket       = var.bucket_name
+  key          = "css/style.css"
+  source       = "C:/Users/param/OneDrive/Desktop/Dev/Portfolio/portfolio-deployment/website_3/css/styles.css"
+  etag         = filemd5("C:/Users/param/OneDrive/Desktop/Dev/Portfolio/portfolio-deployment/website_3/css/styles.css")
+  tags         = var.tags
+  content_type = "text/css"
+  
 }
 
 resource "aws_s3_bucket_website_configuration" "website" {
   bucket = aws_s3_bucket.bucket.id
   index_document {
-    suffix = "feedback.html"
+    suffix = var.index_document
   }
 }
 
@@ -75,3 +85,12 @@ data "aws_iam_policy_document" "allow_access_from_another_account" {
   }
 }
 
+# resource "aws_s3_bucket_cors_configuration" "portflio-cors" {
+#   bucket = data.aws_s3_bucket.selected-bucket.bucket
+# cors_rule {
+#     allowed_headers = ["Authorization", "Content-Length"]
+#     allowed_methods = ["GET", "POST"]
+#     allowed_origins = ["https://www.${var.domain_name}"]
+#     max_age_seconds = 3000
+#   }
+# }

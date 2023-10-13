@@ -22,3 +22,6 @@ variable "tags" {
   type = map(string)
 }
 
+variable "index_document" {
+  type =string
+}

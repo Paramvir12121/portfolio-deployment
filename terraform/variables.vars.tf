@@ -1,8 +1,8 @@
 locals {
   aws_region = "us-east-1"
   tags = {
-    name = "portfolio-1"
-    env  = "dev-portfolio-1"
+    name = "portfolio"
+    env  = "dev-portfolio"
   }
 }
 
@@ -24,3 +24,4 @@ variable "github_access_token" {
 variable "accountId" {
   default = "C:/Users/param/.ssh/ACS-keys/aws_account_id.txt"
 }
+
