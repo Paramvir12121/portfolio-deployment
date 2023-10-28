@@ -23,5 +23,5 @@ variable "tags" {
 }
 
 variable "index_document" {
-  type =string
+  type = string
 }

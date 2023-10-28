@@ -1,3 +1,12 @@
+locals {
+  content_types = {
+    "html" = "text/html",
+    "css"  = "text/css",
+    "js"   = "application/javascript"
+    # ... add more if needed
+  }
+}
+
 resource "aws_s3_bucket" "bucket" {
   bucket = var.bucket_name
   tags   = var.tags
@@ -39,19 +48,11 @@ resource "aws_s3_bucket_object" "object" {
   source       = "../website_3/${each.value}"
   etag         = filemd5("../website_3/${each.value}")
   tags         = var.tags
-  content_type = "text/html"
+  content_type = lookup(local.content_types, element(split(".", each.value), 1), "text/plain")
+
 }
 
-resource "aws_s3_bucket_object" "object_css" {
-  depends_on   = [aws_s3_bucket.bucket]
-  bucket       = var.bucket_name
-  key          = "css/style.css"
-  source       = "C:/Users/param/OneDrive/Desktop/Dev/Portfolio/portfolio-deployment/website_3/css/styles.css"
-  etag         = filemd5("C:/Users/param/OneDrive/Desktop/Dev/Portfolio/portfolio-deployment/website_3/css/styles.css")
-  tags         = var.tags
-  content_type = "text/css"
-  
-}
+
 
 resource "aws_s3_bucket_website_configuration" "website" {
   bucket = aws_s3_bucket.bucket.id
@@ -65,6 +66,7 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket     = aws_s3_bucket.bucket.id
   policy     = data.aws_iam_policy_document.allow_access_from_another_account.json
 }
+
 
 data "aws_iam_policy_document" "allow_access_from_another_account" {
   statement {
