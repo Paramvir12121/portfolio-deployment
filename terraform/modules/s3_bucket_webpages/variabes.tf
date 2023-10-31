@@ -13,7 +13,6 @@ variable "bucket_name" {
   type = string
 }
 
-# Define a list of files to upload
 variable "files_to_upload" {
   type = list(string)
 }
