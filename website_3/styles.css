@@ -10933,6 +10933,10 @@ p.lead {
   font-size: 1.5rem;
   margin-right: 1.5rem;
 }
+.link-underline-remove {
+  text-decoration: none;
+}
+
 .social-icons .social-icon:last-child {
   margin-right: 0;
 }
