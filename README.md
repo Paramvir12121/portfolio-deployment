@@ -38,7 +38,7 @@ You can select which website to be deployed by changing variable values in `terr
 
 1. Navigate to the `terraform/` directory:
 
-    cd terraform
+    ```cd terraform
 
 2. Initialize the terraform  configuration:
     terraform init
@@ -64,7 +64,7 @@ To deploy the portfolio websites, follow these steps:
 ## Cleaning Up
 To destroy the resources created by Terraform and clean up your deployment, go to terraform directory and run the command:
 
-```terraform destroy
+terraform destroy
 
 Confirm the destruction of resources when prompted.
 
