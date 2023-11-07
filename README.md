@@ -38,10 +38,10 @@ You can select which website to be deployed by changing variable values in `terr
 
 1. Navigate to the `terraform/` directory:
 
-   ```cd terraform```
+    cd terraform
 
 2. Initialize the terraform  configuration:
-    ```terraform init```
+    terraform init
 
 3. Customize the Terraform variables in the `terraform/main.tf` and `terraform/variables.tf`  file to suit your needs. You may need to set variables such as S3 bucket names, AWS region, and website directory paths.
 
@@ -53,18 +53,18 @@ To deploy the portfolio websites, follow these steps:
 
 1. From the terraform/ directory, plan the Terraform execution:
 
-```terraform plan```
+    terraform plan
 
 2. If the plan looks good, apply the Terraform configuration to create the S3 buckets and configure the websites:
 
-```terraform apply```
+    terraform apply
 
 3. After the apply is successful, Terraform will output the URL of the deployed website. You can access the website using that URL.
 
 ## Cleaning Up
 To destroy the resources created by Terraform and clean up your deployment, go to terraform directory and run the command:
 
-```terraform destroy```
+```terraform destroy
 
 Confirm the destruction of resources when prompted.
 
