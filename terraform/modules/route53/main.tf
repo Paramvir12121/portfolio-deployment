@@ -1,10 +1,10 @@
 resource "aws_route53_zone" "zone" {
-  name = "iamparamvirsingh.com"
+  name = var.domain_name
 }
 
 resource "aws_route53_record" "s3site" {
   zone_id = aws_route53_zone.zone.zone_id
-  name = "iamparamvirsingh.com"
+  name = var.domain_name
   type = "A"
   
   alias {
