@@ -9,9 +9,9 @@ module "s3_bucket_webpages" {
   tags                      = local.tags
 }
 
-module "route53" {
-  source = "./modules/route53"
-  domain_name = "iamparamvirsingh.com" 
-}
+# module "route53" {
+#   source = "./modules/route53"
+#   domain_name = "iamparamvirsingh.com" 
+# }
 
 
